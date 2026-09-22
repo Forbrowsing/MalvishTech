@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Malvish Tech builds professional websites, web applications, and digital solutions for growing businesses." />
     <title>Malvish Tech — Websites, Web Apps & Digital Solutions</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Malvish Tech — Websites, Web Apps & Digital Solutions" />
+    <meta property="og:description" content="Malvish Tech builds professional websites, web applications, and digital solutions for growing businesses." />
+    <meta property="og:image" content="og-image.png" />
+    <meta property="og:url" content="https://malvishtech.com/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Malvish Tech — Websites, Web Apps & Digital Solutions" />
+    <meta name="twitter:description" content="Malvish Tech builds professional websites, web applications, and digital solutions for growing businesses." />
+    <meta name="twitter:image" content="og-image.png" />
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -16,12 +34,22 @@
     alt="Malvish Tech"
     class="header-logo"/>  
       </a>
-      <nav aria-label="Main navigation">
+      <nav aria-label="Main navigation" id="main-nav">
         <a href="#services">Services</a>
         <a href="#work">Work</a>
         <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <a class="header-contact" href="mailto:malvishtech@gmail.com">Start a project <span>↗</span></a>
+      <a class="header-contact" href="#contact">Start a project <span>↗</span></a>
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </header>
 
     <main id="top">
@@ -101,6 +129,31 @@
         </div>
       </section>
 
+      <!--
+        STATS SECTION 
+      -->
+      <section class="section stats" aria-labelledby="stats-title">
+        <h2 id="stats-title" class="visually-hidden">Malvish Tech in numbers</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat-number" data-target="3" data-suffix="+">0+</span>
+            <span class="stat-label">Projects delivered</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="5" data-suffix="+">0+</span>
+            <span class="stat-label">Happy clients</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="2" data-suffix="+">0+</span>
+            <span class="stat-label">Months building</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="70" data-suffix="%">0%</span>
+            <span class="stat-label">Client retention</span>
+          </div>
+        </div>
+      </section>
+
       <section class="section process" id="process" aria-labelledby="process-title">
         <div class="section-heading split-heading">
           <div><p class="eyebrow"><span></span> HOW WE WORK</p><h2 id="process-title">From idea to usable product.</h2></div>
@@ -169,6 +222,73 @@
  
   // Set the current year in the footer
    document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Mobile nav toggle
+  var navToggle = document.getElementById("nav-toggle");
+  var mainNav = document.getElementById("main-nav");
+  if (navToggle && mainNav) {
+    navToggle.addEventListener("click", function () {
+      var isOpen = mainNav.classList.toggle("nav-open");
+      navToggle.classList.toggle("is-active", isOpen);
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    });
+
+    // Close the menu after tapping a nav link
+    mainNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        mainNav.classList.remove("nav-open");
+        navToggle.classList.remove("is-active");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open menu");
+      });
+    });
+  }
+
+  // Stats — count up when scrolled into view
+  var statNumbers = document.querySelectorAll(".stat-number");
+  if (statNumbers.length && "IntersectionObserver" in window) {
+    var animateStat = function (el) {
+      var target = parseFloat(el.getAttribute("data-target"), 10);
+      var suffix = el.getAttribute("data-suffix") || "";
+      var duration = 1400; // ms
+      var startTime = null;
+
+      var step = function (timestamp) {
+        if (startTime === null) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // ease-out for a natural deceleration
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(eased * target);
+
+        el.textContent = current + suffix;
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          el.textContent = target + suffix;
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    };
+
+    var statsObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            animateStat(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    statNumbers.forEach(function (el) {
+      statsObserver.observe(el);
+    });
+  }
 
   // Contact form -> mailto submission
   var contactForm = document.getElementById("contact-form");
