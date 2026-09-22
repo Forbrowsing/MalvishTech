@@ -819,6 +819,134 @@ nav a:hover {
 
 
 /* =========================
+   CONTACT FORM
+========================= */
+
+.contact-form {
+  max-width: 720px;
+  margin-top: 46px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  margin-bottom: 18px;
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-field label {
+  color: #a9b2c2;
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 13px 15px;
+
+  background: #171d29;
+  color: #ffffff;
+
+  border: 1px solid #333d4f;
+  border-radius: 6px;
+
+  font-family: "Manrope", sans-serif;
+  font-size: 14.5px;
+
+  transition: border-color 0.2s ease;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2380a9ff' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 38px;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #6b7488;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.form-submit {
+  margin-top: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-note {
+  margin: 14px 0 0;
+
+  color: #7c869a;
+
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.contact-direct {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 38px;
+
+  color: #a9b2c2;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contact-direct span {
+  color: #80a9ff;
+  font-size: 1.2em;
+}
+
+
+/* =========================
+   CONTACT FORM — MOBILE
+========================= */
+
+@media (max-width: 760px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form {
+    margin-top: 32px;
+  }
+}
+
+
+/* =========================
    FOOTER
 ========================= */
 

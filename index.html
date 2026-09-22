@@ -117,7 +117,40 @@
       <section class="contact" id="contact" aria-labelledby="contact-title">
         <p class="eyebrow"><span></span> START A CONVERSATION</p>
         <h2 id="contact-title">Have a business problem<br />worth solving online?</h2>
-        <a  class="allow-select" href="mailto:malvishtech@gmail.com?subject=Project%20enquiry%20for%20Malvish%20Tech">malvishtech@gmail.com <span>↗</span></a>
+
+        <form class="contact-form" id="contact-form" aria-label="Project enquiry form">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@company.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-service">What do you need?</label>
+              <select id="cf-service" name="service">
+                <option value="Business Website">Business Website</option>
+                <option value="Web Application">Web Application</option>
+                <option value="Digital Solution">Digital Solution</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field form-field-full">
+              <label for="cf-message">Project details</label>
+              <textarea id="cf-message" name="message" rows="5" placeholder="Tell us a bit about what you're trying to build..." required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="button primary form-submit">Send enquiry <span>↗</span></button>
+          <p class="form-note">This opens your email app with the message pre-filled, addressed to malvishtech@gmail.com.</p>
+        </form>
+
+        <a class="allow-select contact-direct" href="mailto:malvishtech@gmail.com?subject=Project%20enquiry%20for%20Malvish%20Tech">Or email us directly — malvishtech@gmail.com <span>↗</span></a>
       </section>
     </main>
 
@@ -136,6 +169,33 @@
  
   // Set the current year in the footer
    document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Contact form -> mailto submission
+  var contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      var name = document.getElementById("cf-name").value.trim();
+      var email = document.getElementById("cf-email").value.trim();
+      var service = document.getElementById("cf-service").value;
+      var message = document.getElementById("cf-message").value.trim();
+
+      var subject = "Project enquiry from " + name + " — " + service;
+      var body =
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Service: " + service + "\n\n" +
+        "Message:\n" + message;
+
+      var mailtoLink =
+        "mailto:malvishtech@gmail.com" +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.location.href = mailtoLink;
+    });
+  }
 </script>
   </body>
 </html>
